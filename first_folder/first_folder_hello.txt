@@ -1,1 +1,16 @@
 Hello World
+
+istio-install:
+	@for cluster in $(TARGET_CLUSTERS_ZONES); do \
+		gcloud container clusters get-credentials $(GCP_PROJECT_NAME)_$${cluster}_$(ENVIRONMENT) --zone=australia-southeast1-$${cluster} --project=$(GCP_PROJECT_ID) --internal-ip --impersonate-service-account=terraform@$(GCP_PROJECT_ID).iam.gserviceaccount.com; \
+		sed -i 's/config config-helper/config config-helper --impersonate-service-account=terraform@$(GCP_PROJECT_ID).iam.gserviceaccount.com/g' ~/.kube/config; \
+		istioctl manifest apply -f istio.yaml; \
+	done
+
+
+gcp_ecp_sharedcluster_np@anz.com
+	
+gcp_ecp_sharedcluster_np_namespace1@anz.com
+
+	
+gcp_observers@anz.com
